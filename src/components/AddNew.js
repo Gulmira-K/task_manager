@@ -1,20 +1,19 @@
 import { useState } from "react"
 import { Collapse, Paper, Typography, fade, makeStyles } from "@material-ui/core"
 import CreateNew from "./CreateNew"
-import { classes } from "istanbul-lib-coverage"
 
-export default function AddNew() {
+export default function AddNew({type}) {
   const [open, setOpen] = useState(false)
   const classes = useStyle()
 
   return (
     <div className={classes.container}>
       <Collapse in={open}>
-        <CreateNew />
+        <CreateNew type={type} setOpen={setOpen} />
       </Collapse>
       <Collapse in={!open}>
-        <Paper className={classes.addNewText}>
-          <Typography>Add a todo</Typography>
+        <Paper className={classes.addNewText} onClick={() => setOpen(true)}>
+          <Typography>+ Add a {type}</Typography>
         </Paper>
       </Collapse>
     </div>
