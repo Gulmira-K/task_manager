@@ -9,10 +9,8 @@ import AddNew from "./AddNew"
 function App({lists, dispatch}) {
   const classes = useStyles()
 
-
-
   const onDragEnd = (result) => {
-    const{ destination, source, draggableId } = result
+    const{ destination, source, draggableId, type } = result
     
     if (!destination) {
       return
@@ -23,7 +21,8 @@ function App({lists, dispatch}) {
       destination.droppableId,
       source.index,
       destination.index,
-      draggableId
+      draggableId,
+      type
     ))
 
   }

@@ -1,15 +1,14 @@
 import React, { useState } from "react"
 import { Typography, makeStyles, InputBase} from "@material-ui/core"
-import  MoreHorizIcon from "@material-ui/icons/MoreHoriz"
+import ClearIcon from "@material-ui/icons/Clear"
 
-export default function ListTitle({ title, listId }) {
+export default function ListTitle({title}) {
   const classes = useStyle()
 
   const [edit, setEdit] = useState(false)
   const [newTitle, setNewTitle] = useState(title)
 
   const handleTitleChange = () => {
-    // updateListTitle(newTitle, listId)
     setEdit(false)
   }
   
@@ -30,7 +29,7 @@ export default function ListTitle({ title, listId }) {
             <Typography className={classes.title} onClick={() => setEdit(true)}>
               {newTitle}
             </Typography>
-            <MoreHorizIcon />
+            <ClearIcon className={classes.clearBtn}/>
           </div>
         )
       }
@@ -60,5 +59,8 @@ const useStyle = makeStyles(theme => ({
       borderRadius: '4px',
       border: '1px solid blue'
     }
+  },
+  clearBtn: {
+    cursor: 'pointer'
   }
 }))
