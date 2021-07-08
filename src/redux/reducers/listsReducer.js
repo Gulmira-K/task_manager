@@ -6,28 +6,28 @@ let todoId = 5
 const initialState = [
   {
     title: 'To Do',
-    id: 0,
+    id: `list${0}`,
     todos: [
       {
-        id: 0,
+        id: `todo${0}`,
         text: 'bla bla bla'
       },
       {
-        id: 1,
+        id: `todo${1}`,
         text: 'some text'
       },
     ]
   },
   {
     title: 'In process',
-    id: 1,
+    id: `list${1}`,
     todos: [
       {
-        id: 0,
+        id: `todo${2}`,
         text: 'bla bla bla'
       },
       {
-        id: 1,
+        id:  `todo${3}`,
         text: 'some text'
       },
     ]
@@ -39,7 +39,7 @@ const listsReducer = (state = initialState, action) => {
     case CONSTANTS.ADD_LIST:
       const newList = {
         title: action.payload,
-        id: listId,
+        id: `list${listId}`,
         todos: [],
       }
       listId += 1
@@ -48,7 +48,7 @@ const listsReducer = (state = initialState, action) => {
     case CONSTANTS.ADD_TODO:
       const newTodo = {
         text: action.payload.text,
-        id: todoId,
+        id:  `todo${todoId}`,
       }
       todoId += 1
 
@@ -64,6 +64,36 @@ const listsReducer = (state = initialState, action) => {
       })
 
       return newState
+    
+    case CONSTANTS.DRAG_OCCURED:
+      const {
+        droppableIdStart,
+        droppableIdEnd,
+        droppableIndexStart,
+        droppableIndexEnd,
+        draggableId
+      } = action.payload
+
+      const newTodoState = [...state]
+
+      if (droppableIdStart === droppableIdEnd) {
+        const list = state.find(list => droppableIdStart === list.id)
+        const todo = list.todos.splice(droppableIndexStart, 1)
+        list.todos.splice(droppableIndexEnd, 0, ...todo)
+      }
+
+      if (droppableIdStart !== droppableIdEnd) {
+        const listStart = state.find(list => droppableIdStart === list.id)
+        
+        const todo = listStart.todos.splice(droppableIndexStart, 1)
+
+        const listEnd = state.find(list => droppableIdEnd === list.id)
+
+        listEnd.todos.splice(droppableIndexEnd, 0, ...todo)
+
+      }
+
+      return newTodoState
     
     default:
       return state

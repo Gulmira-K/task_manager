@@ -1,27 +1,53 @@
 import { connect } from "react-redux"
+import { DragDropContext, Droppable } from "react-beautiful-dnd"
+import { sort } from '../redux/actions'
 import { makeStyles } from "@material-ui/core"
 import List from "./List"
 import AddNew from "./AddNew"
 
 
-function App({lists}) {
+function App({lists, dispatch}) {
   const classes = useStyles()
 
-  const list = lists.map(list => {
-    return (
-      <List key={list.id} title={list.title} todos={list.todos} listId={list.id}/>
-    )
-  })
+
+
+  const onDragEnd = (result) => {
+    const{ destination, source, draggableId } = result
+    
+    if (!destination) {
+      return
+    }
+
+    dispatch(sort(
+      source.droppableId,
+      destination.droppableId,
+      source.index,
+      destination.index,
+      draggableId
+    ))
+
+  }
 
   return (
-    <div className={classes.container}>
-      <div className={classes.wrapper}>
-        {list}
-        <div className={classes.addWrapper}>
-          <AddNew type='list'/>
-        </div>
+    <DragDropContext onDragEnd={onDragEnd}>
+      <div className={classes.container}>
+        <Droppable droppableId='lists' direction='horizontal' type='list'>
+          {provided => (
+            <div className={classes.wrapper} {...provided.droppableProps} ref={provided.innerRef}>
+              {lists.map((list, index) => {
+                return (
+                  <List key={list.id} title={list.title} todos={list.todos} listId={list.id} index={index}/>
+                )
+              })}
+              {provided.placeholder}
+              <div className={classes.addWrapper}>
+                <AddNew type='list'/>
+              </div>
+            </div>
+          )}
+        </Droppable>
       </div>
-    </div>
+    </DragDropContext> 
   );
 }
 
