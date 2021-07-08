@@ -1,10 +1,11 @@
 import { Paper, makeStyles } from "@material-ui/core"
 
-export default function Todo({title}) {
+export default function Todo({text}) {
   const classes = useStyle();
+  
   return (
     <Paper className={classes.todo}>
-      {title}
+      {text}
     </Paper>
   )
 }

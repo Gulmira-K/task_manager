@@ -3,19 +3,16 @@ import { Typography, makeStyles, InputBase} from "@material-ui/core"
 import  MoreHorizIcon from "@material-ui/icons/MoreHoriz"
 
 export default function ListTitle({ title, listId }) {
+  const classes = useStyle()
+
   const [edit, setEdit] = useState(false)
   const [newTitle, setNewTitle] = useState(title)
 
- 
   const handleTitleChange = () => {
     // updateListTitle(newTitle, listId)
     setEdit(false)
   }
   
-
-
-  const classes = useStyle()
-
   return (
     <React.Fragment>
       {edit ?
@@ -29,8 +26,8 @@ export default function ListTitle({ title, listId }) {
             fullWidth
           />
         ) : (
-          <div className={classes.titleWrapper} onClick={() => setEdit(true)}>
-            <Typography className={classes.title}>
+          <div className={classes.titleWrapper}>
+            <Typography className={classes.title} onClick={() => setEdit(true)}>
               {newTitle}
             </Typography>
             <MoreHorizIcon />
@@ -50,7 +47,8 @@ const useStyle = makeStyles(theme => ({
   title: {
     flexGrow: 1,
     fontWeight: 'bold',
-    fortSize: '1.2rem'
+    fortSize: '1.2rem',
+    width: '80%'
   },
   input: {
     fontWeight: 'bold',

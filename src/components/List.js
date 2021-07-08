@@ -4,22 +4,20 @@ import Todo from "./Todo"
 import AddNew from "./AddNew"
 
 export default function List({ title, listId, todos}) {
-
+  const classes = useStyle()
 
   const todosList = todos?.map(todo => {
     return (
-      <Todo key={todo.id} title={todo.title} />
+      <Todo key={todo.id} text={todo.text} />
     )
   })
-
-  const classes = useStyle()
   
   return (
     <Paper className={classes.container}>
       <CssBaseline />
       <ListTitle title={title} listId={listId}/>
       {todosList}
-      <AddNew type='todo'/>
+      <AddNew type='to-do' listId={listId}/>
     </Paper>
   )
 }

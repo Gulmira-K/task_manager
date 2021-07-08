@@ -1,24 +1,18 @@
-import { useState } from "react"
+import { connect } from "react-redux"
 import { makeStyles } from "@material-ui/core"
-import { useSelector, useDispatch } from 'react-redux'
-
-
 import List from "./List"
-import AddNew from "./AddNew";
-import mokedata from './mokedata'
+import AddNew from "./AddNew"
 
 
-function App() {
-  const lists = useSelector((state) => state.lists.lists)
-  const classes = useStyles();
-
-  console.log(lists);
+function App({lists}) {
+  const classes = useStyles()
 
   const list = lists.map(list => {
     return (
       <List key={list.id} title={list.title} todos={list.todos} listId={list.id}/>
     )
   })
+
   return (
     <div className={classes.container}>
       <div className={classes.wrapper}>
@@ -31,20 +25,20 @@ function App() {
   );
 }
 
-export default App;
+const mapStateToProps = state => ({
+  lists: state.lists
+})
+
+export default connect(mapStateToProps) (App);
 
 const useStyles = makeStyles(theme => ({
   container: {
     height: '100vh',
-    overflow: 'auto'
+    overflow: 'auto',
+    backgroundColor: '#1EAE98'
   },
   wrapper: {
     display: 'flex'
   },
-  addWrapper: {
-    backgroundColor: 'rgb(0,0,0, 0.05)',
-    height: '100%',
-    marginTop: theme.spacing(2),
-    borderRadius: '4px'
-  }
+
 }))

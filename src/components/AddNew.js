@@ -2,14 +2,15 @@ import { useState } from "react"
 import { Collapse, Paper, Typography, fade, makeStyles } from "@material-ui/core"
 import CreateNew from "./CreateNew"
 
-export default function AddNew({type}) {
+export default function AddNew({type, listId}) {
   const [open, setOpen] = useState(false)
+  
   const classes = useStyle()
 
   return (
     <div className={classes.container}>
       <Collapse in={open}>
-        <CreateNew type={type} setOpen={setOpen} />
+        <CreateNew type={type} setOpen={setOpen} listId={listId}/>
       </Collapse>
       <Collapse in={!open}>
         <Paper className={classes.addNewText} onClick={() => setOpen(true)}>
