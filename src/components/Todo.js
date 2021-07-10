@@ -2,7 +2,6 @@ import { Draggable } from "react-beautiful-dnd";
 import { Paper, makeStyles } from "@material-ui/core"
 
 export default function Todo({ text, todoId, index }) {
-  console.log(index)
   const classes = useStyle();
   
   return (

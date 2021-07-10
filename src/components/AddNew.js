@@ -24,7 +24,8 @@ export default function AddNew({type, listId}) {
 const useStyle = makeStyles(theme => ({
   container: {
     width: '280px',
-    marginTop: theme.spacing(1)
+    marginTop: theme.spacing(1),
+    cursor:'pointer'
   },
   addNewText: {
     padding: theme.spacing(0.5),

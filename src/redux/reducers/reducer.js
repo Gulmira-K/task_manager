@@ -1,7 +1,6 @@
 import {CONSTANTS} from '../actions'
 
-let listId = 2
-let todoId = 5
+let listId = 2, todoId = 5
 
 const initialState = [
   {
@@ -36,7 +35,7 @@ const initialState = [
 
 const listsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case CONSTANTS.ADD_LIST:
+    case CONSTANTS.ADD_LIST: {
       const newList = {
         title: action.payload,
         id: `list${listId}`,
@@ -44,11 +43,12 @@ const listsReducer = (state = initialState, action) => {
       }
       listId += 1
       return [...state, newList]
-    
-    case CONSTANTS.ADD_TODO:
+    }
+      
+    case CONSTANTS.ADD_TODO: {
       const newTodo = {
         text: action.payload.text,
-        id:  `todo${todoId}`,
+        id: `todo${todoId}`,
       }
       todoId += 1
 
@@ -64,8 +64,9 @@ const listsReducer = (state = initialState, action) => {
       })
 
       return newState
-    
-    case CONSTANTS.DRAG_OCCURED:
+    }
+      
+    case CONSTANTS.DRAG_OCCURED: {
       const {
         droppableIdStart,
         droppableIdEnd,
@@ -80,31 +81,49 @@ const listsReducer = (state = initialState, action) => {
       if (type === 'list') {
         const list = newTodoState.splice(droppableIndexStart, 1)
         newTodoState.splice(droppableIndexEnd, 0, ...list)
+
         return newTodoState
       }
 
       if (droppableIdStart === droppableIdEnd) {
-        const list = state.find(list => droppableIdStart === list.id)
-        const todo = list.todos.splice(droppableIndexStart, 1)
+        const list = state.find(list => droppableIdStart === list.id),
+              todo = list.todos.splice(droppableIndexStart, 1)
+        
         list.todos.splice(droppableIndexEnd, 0, ...todo)
       }
 
       if (droppableIdStart !== droppableIdEnd) {
-        const listStart = state.find(list => droppableIdStart === list.id)
-        
-        const todo = listStart.todos.splice(droppableIndexStart, 1)
-
-        const listEnd = state.find(list => droppableIdEnd === list.id)
+        const listStart = state.find(list => droppableIdStart === list.id),
+              todo = listStart.todos.splice(droppableIndexStart, 1),
+              listEnd = state.find(list => droppableIdEnd === list.id)
 
         listEnd.todos.splice(droppableIndexEnd, 0, ...todo)
-
       }
 
       return newTodoState
-    
+    }
+      
+    case CONSTANTS.EDIT_LIST_TITLE: {
+      const { listId, newTitle } = action.payload,
+             list = state.find(list => list.id === listId)
+
+      list.title = newTitle
+
+      return [...state]
+    }
+      
+    case CONSTANTS.DELETE_LIST: {
+      const { listId } = action.payload,
+          list = state.find(list => list.id === listId)
+      
+      state.splice(list, 1)
+      
+      return [...state]
+    }
+      
     default:
       return state
-  }
+ }
 }
 
 export default listsReducer

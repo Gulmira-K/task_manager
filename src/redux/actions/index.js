@@ -4,6 +4,8 @@ export * from './todosActions'
 export const CONSTANTS = {
   ADD_TODO: 'ADD_TODO',
   ADD_LIST: 'ADD_LIST',
-  DRAG_OCCURED: 'DRAG_OCCURED'
+  DRAG_OCCURED: 'DRAG_OCCURED',
+  EDIT_LIST_TITLE: 'EDIT_LIST_TITLE',
+  DELETE_LIST: 'DELETE_LIST'
 }
 
