@@ -9,11 +9,11 @@ const initialState = [
     todos: [
       {
         id: `todo${0}`,
-        text: 'bla bla bla'
+        text: 'Create README file'
       },
       {
         id: `todo${1}`,
-        text: 'some text'
+        text: 'Push updated code to the respository'
       },
     ]
   },
@@ -23,17 +23,21 @@ const initialState = [
     todos: [
       {
         id: `todo${2}`,
-        text: 'bla bla bla'
+        text: 'Create new component'
       },
       {
         id:  `todo${3}`,
-        text: 'some text'
+        text: 'Implement Redux'
+      },
+       {
+        id:  `todo${4}`,
+        text: 'Refactor the code'
       },
     ]
   },
 ]
 
-const listsReducer = (state = initialState, action) => {
+const reducer = (state = initialState, action) => {
   switch (action.type) {
     case CONSTANTS.ADD_LIST: {
       const newList = {
@@ -72,7 +76,6 @@ const listsReducer = (state = initialState, action) => {
         droppableIdEnd,
         droppableIndexStart,
         droppableIndexEnd,
-        draggableId,
         type
       } = action.payload
 
@@ -113,17 +116,34 @@ const listsReducer = (state = initialState, action) => {
     }
       
     case CONSTANTS.DELETE_LIST: {
-      const { listId } = action.payload,
-          list = state.find(list => list.id === listId)
+      const { listId } = action.payload
+      return  state.filter(list => list.id !== listId)
+    }
       
-      state.splice(list, 1)
+    case CONSTANTS.EDIT_TODO: {
+      const { todoId, listId, newText } = action.payload,
+        list = state.find(list => list.id === listId),
+        todo = list.todos.find(todo => todo.id === todoId)
+        todo.text = newText
+
+      return [...state]
+    }
       
+    case CONSTANTS.DELETE_TODO: {
+      const { todoId, listId } = action.payload,
+        list = state.find(list => list.id === listId),
+        todo = list.todos.find(todo => todo.id === todoId),
+        todoIndex = list.todos.indexOf(todo)
+
+        list.todos.splice(todoIndex, 1)
+
       return [...state]
     }
       
     default:
       return state
- }
+  }
+  
 }
 
-export default listsReducer
+export default reducer

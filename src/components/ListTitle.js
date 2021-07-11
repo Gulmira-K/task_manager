@@ -56,7 +56,8 @@ const useStyle = makeStyles(theme => ({
     fontWeight: 'bold',
     fortSize: '1.2rem',
     width: '80%',
-    cursor: 'text'
+    cursor: 'text',
+    textTransform: 'capitalize'
   },
   input: {
     fontWeight: 'bold',

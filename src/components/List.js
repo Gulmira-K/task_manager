@@ -4,7 +4,8 @@ import ListTitle from "./ListTitle"
 import Todo from "./Todo"
 import AddNew from "./AddNew"
 
-export default function List({ title, listId, todos, index}) {
+
+export default function List({ title, listId, todos, index }) {
   const classes = useStyle()
 
   return (
@@ -19,7 +20,7 @@ export default function List({ title, listId, todos, index}) {
                   <ListTitle title={title} listId={listId}/>
                   {todos?.map((todo, index) => {
                     return (
-                      <Todo key={todo.id} text={todo.text} todoId={todo.id} index={index}/>
+                      <Todo key={todo.id} text={todo.text} todoId={todo.id} listId={listId} index={index} />
                     )
                   })}
                   {provided.placeholder}

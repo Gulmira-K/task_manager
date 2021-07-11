@@ -6,3 +6,24 @@ export const addTodo = (listId, text) => {
     payload: { text, listId}
   }
 }
+
+export const editTodo = (todoId, listId, newText) => {
+  return {
+    type: CONSTANTS.EDIT_TODO,
+    payload: {
+      todoId,
+      listId,
+      newText
+    }
+  }
+}
+
+export const deleteTodo = (todoId, listId) => {
+  return {
+    type: CONSTANTS.DELETE_TODO,
+    payload: {
+      todoId,
+      listId
+    }
+  }
+}
